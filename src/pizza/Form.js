@@ -43,10 +43,10 @@ const Form = () => {
         e.persist();
         const newFormData = {
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
         }
 
-        validateChange(e);
+
         setFormData(newFormData);
     }
     const submitFunction = (event) => {
@@ -74,7 +74,7 @@ const Form = () => {
         peperoni: yup.string().required("Required"),
         sausage: yup.string().required("Required"),
         avacado: yup.string().required("Required"),
-        bacon: yup.string().required("Required"),
+        peperoni: yup.string().required("Required"),
         specialInstructions: yup.string().required("Required")
     });
 
@@ -88,10 +88,11 @@ const Form = () => {
         <form onSubmit={submitFunction}>
             <label htmlFor="name"> Name: <input id="name" type="text" name="name" value={formData.name} onChange={change} /> {errors.name.length > 0 ? <p>{errors.name}</p> : null}</label>
             <select>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-                <option value="XL">XL</option>
+                <option value={formData.size} onChange={change} id="small">Small</option>
+                <option value={formData.size} onChange={change} id="medium">Medium</option>
+                <option value={formData.size} onChange={change} id="large">Large</option>
+                <option value={formData.size} onChange={change} id="xl" >XL</option>
+                <option value={formData.size} onChange={change} id="gf" >GlutenFree</option>
             </select>
             <label htmlFor="peperoni"> peperoni: <input id="peperoni" type="checkbox" name="peperoni" value={formData.peperoni} onChange={change} /> {errors.peperoni.length > 0 ? <p>{errors.peperoni}</p> : null}</label>
             <label htmlFor="sausage"> sausage: <input id="sausage" type="checkbox" name="sausage" value={formData.sausage} onChange={change} /> {errors.sausage.length > 0 ? <p>{errors.sausage}</p> : null}</label>
@@ -99,7 +100,7 @@ const Form = () => {
             <label htmlFor="bacon"> bacon: <input id="bacon" type="checkbox" name="bacon" value={formData.bacon} onChange={change} /> {errors.bacon.length > 0 ? <p>{errors.bacon}</p> : null}</label>
 
             <label htmlFor="specialInstructions"> Instructions of Service: <input id="specialInstructions" type="text" name="specialInstructions" checked={formData.specialInstructions} onChange={change} /> {errors.specialInstructions.length > 0 ? <p>{errors.specialInstructions}</p> : null} </label>
-            <button type="submit" >Add to Order</button>
+            <button type="submit" className='sub' >Add to Order</button>
             <pre>{JSON.stringify(post, null, 2)}</pre>
         </form>
     );
