@@ -6,16 +6,22 @@ const Form = () => {
 
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        password: '',
-        terms: ''
+        size: '',
+        peperoni: '',
+        sausage: '',
+        avacado: '',
+        bacon: '',
+        specialInstructions: ''
     });
     const [buttonDisabled, setButtonDisabled] = useState();
     const [errors, setErrors] = useState({
         name: '',
-        email: '',
-        password: '',
-        terms: ''
+        size: '',
+        peperoni: '',
+        sausage: '',
+        avacado: '',
+        bacon: '',
+        specialInstructions: ''
     })
     const [post, setPost] = useState();
     const validateChange = (e) => {
@@ -50,9 +56,12 @@ const Form = () => {
                 setPost([post, res.data]);
                 setFormData({
                     name: '',
-                    email: '',
-                    password: '',
-                    terms: true
+                    size: '',
+                    peperoni: '',
+                    sausage: '',
+                    avacado: '',
+                    bacon: '',
+                    specialInstructions: true
                 })
             })
             .catch((err) => {
@@ -61,9 +70,12 @@ const Form = () => {
     }
     const dataSchema = yup.object().shape({
         name: yup.string().required("Required"),
-        email: yup.string().email("Must Be Valid Email").required("Required"),
-        password: yup.string().required("Required"),
-        terms: yup.boolean().oneOf([true], "")
+        size: yup.string().size("Must Be Valid size").required("Required"),
+        peperoni: yup.string().required("Required"),
+        sausage: yup.string().required("Required"),
+        avacado: yup.string().required("Required"),
+        bacon: yup.string().required("Required"),
+        specialInstructions: yup.boolean().oneOf([true], "")
     });
 
     useEffect(() => {
@@ -75,10 +87,21 @@ const Form = () => {
     return (
         <form onSubmit={submitFunction}>
             <label htmlFor="name"> Name: <input id="name" type="text" name="name" value={formData.name} onChange={change} /> {errors.name.length > 0 ? <p>{errors.name}</p> : null}</label>
-            <label htmlFor="email"> Email: <input id="email" type="email" name="email" value={formData.email} onChange={change} /> {errors.email.length > 0 ? <p>{errors.email}</p> : null} </label>
-            <label htmlFor="password"> Password: <input id="password" type="password" name="password" value={formData.password} onChange={change} /> {errors.password.length > 0 ? <p>{errors.password}</p> : null}</label>
-            <label htmlFor="terms"> Terms of Service: <input id="terms" type="checkbox" name="terms" checked={formData.terms} onChange={change} /> {errors.terms.length > 0 ? <p>{errors.terms}</p> : null} </label>
-            <button disabled={buttonDisabled} type="submit">Submit</button>
+            <label htmlFor="size"> size: <input id="size" type="dropdown" name="size" value={formData.size} onChange={change} />
+                <select>
+                    <option value="grapefruit">Grapefruit</option>
+                    <option value="lime">Lime</option>
+                    <option selected value="coconut">Coconut</option>
+                    <option value="mango">Mango</option>
+                </select>
+                {errors.size.length > 0 ? <p>{errors.size}</p> : null} </label>
+            <label htmlFor="peperoni"> peperoni: <input id="peperoni" type="checkbox" name="peperoni" value={formData.peperoni} onChange={change} /> {errors.peperoni.length > 0 ? <p>{errors.peperoni}</p> : null}</label>
+            <label htmlFor="sausage"> sausage: <input id="sausage" type="checkbox" name="sausage" value={formData.sausage} onChange={change} /> {errors.sausage.length > 0 ? <p>{errors.sausage}</p> : null}</label>
+            <label htmlFor="avacado"> avacado: <input id="avacado" type="checkbox" name="avacado" value={formData.avacado} onChange={change} /> {errors.avacado.length > 0 ? <p>{errors.avacado}</p> : null}</label>
+            <label htmlFor="bacon"> bacon: <input id="bacon" type="checkbox" name="bacon" value={formData.bacon} onChange={change} /> {errors.bacon.length > 0 ? <p>{errors.bacon}</p> : null}</label>
+
+            <label htmlFor="specialInstructions"> specialInstructions of Service: <input id="specialInstructions" type="textbox" name="specialInstructions" checked={formData.specialInstructions} onChange={change} /> {errors.specialInstructions.length > 0 ? <p>{errors.specialInstructions}</p> : null} </label>
+            <button disabled={buttonDisabled} type="submit">Add to Order</button>
             <pre>{JSON.stringify(post, null, 2)}</pre>
         </form>
     );
